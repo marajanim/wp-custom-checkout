@@ -151,6 +151,9 @@
 .wccp-enabled form.checkout_coupon { margin-bottom: 12px; }
 .wccp-custom-heading { clear: both; padding-top: 8px; }
 .wccp-custom-content { clear: both; margin: 8px 0 16px; }
+.wccp-delivery-area-field .woocommerce-input-wrapper { display: grid; gap: 8px; margin-top: 8px; }
+.wccp-delivery-area-field label.radio { display: flex; align-items: flex-start; gap: 8px; margin: 0; font-weight: 400; }
+.wccp-delivery-area-field input[type="radio"] { flex: 0 0 auto; margin-top: .2em; }
 
 @media (min-width: 1024px) {
 	.wccp-sticky-summary .wccp-checkout-sidebar { position: sticky; top: 24px; }

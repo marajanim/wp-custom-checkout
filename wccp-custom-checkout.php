@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       WCCP Custom Checkout for WooCommerce
  * Description:       A secure, dynamic classic checkout builder for WooCommerce and WoodMart.
- * Version:           0.2.0
+ * Version:           0.3.0
  * Requires at least: 6.5
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WCCP_VERSION', '0.2.0' );
+define( 'WCCP_VERSION', '0.3.0' );
 define( 'WCCP_FILE', __FILE__ );
 define( 'WCCP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WCCP_URL', plugin_dir_url( __FILE__ ) );
@@ -38,6 +38,7 @@ add_action(
 
 require_once WCCP_PATH . 'includes/class-wccp-defaults.php';
 require_once WCCP_PATH . 'includes/class-wccp-settings.php';
+require_once WCCP_PATH . 'includes/class-wccp-delivery-area.php';
 require_once WCCP_PATH . 'includes/class-wccp-fields.php';
 require_once WCCP_PATH . 'includes/class-wccp-checkout.php';
 require_once WCCP_PATH . 'includes/class-wccp-admin.php';

@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, woodmart
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,9 +14,9 @@ A secure, dynamic classic checkout builder for WooCommerce and WoodMart.
 
 WCCP Custom Checkout provides a responsive two-column classic checkout, configurable policy agreement, native checkout field manager, and HPOS-compatible custom order fields.
 
-It also provides a zone-based WCCP Delivery Areas shipping method with three selectable Bengali choices: inside Dhaka, nearby Dhaka regions, and outside Dhaka. Default costs are 60, 90, and 120 in the WooCommerce store currency.
+It also provides a Billing delivery-area radio field with three Bengali choices: inside Dhaka, nearby Dhaka regions, and outside Dhaka. The selected server-validated charge is added to checkout and the order at 60, 90, or 120 in the WooCommerce store currency.
 
-Version 0.1 targets the classic WooCommerce checkout shortcode. Checkout Block pages deliberately retain WooCommerce's native layout and are declared incompatible with this plugin's custom field behavior.
+Version 0.3 targets the classic WooCommerce checkout shortcode. Checkout Block pages deliberately retain WooCommerce's native layout and are declared incompatible with this plugin's custom field behavior.
 
 No payment credentials are collected or stored by this plugin. WooCommerce and installed gateways remain responsible for payment processing, totals, tax, shipping, stock, validation, and order creation.
 
@@ -28,9 +28,9 @@ No payment credentials are collected or stored by this plugin. WooCommerce and i
 4. Confirm the checkout page uses the classic [woocommerce_checkout] shortcode.
 5. Open WooCommerce > Custom Checkout.
 6. Configure layout, policy links, native fields, and any custom fields.
-7. Under WooCommerce > Settings > Shipping > Shipping zones, add WCCP Delivery Areas to the appropriate zone and review its three costs.
-8. Disable any old flat-rate method that would duplicate the new delivery choices.
-9. Complete test orders with every active gateway and shipping method.
+7. Under Checkout Fields > Billing, configure billing_delivery_area. It is enabled and required by default.
+8. Set an existing flat-rate shipping charge to zero or disable it if it would duplicate the delivery-area fee.
+9. Select every delivery area and confirm its total before completing test orders with every active gateway.
 10. Only after successful tests, remove the old SinoGems checkout privacy/terms filters and sinogems_custom_terms_text function from the child theme. Keep the unrelated WoodMart child stylesheet enqueue function.
 11. Clear WordPress, WoodMart, page, object, and CDN caches.
 
@@ -46,7 +46,7 @@ Custom Fields supports text, textarea, email, telephone, number, select, radio, 
 
 = Does this support Checkout Block? =
 
-Not in version 0.1. The block keeps its native layout. Use the classic checkout shortcode for plugin functionality.
+Not in version 0.3. The block keeps its native layout. Use the classic checkout shortcode for plugin functionality.
 
 = Is HPOS supported? =
 
@@ -71,6 +71,12 @@ Settings mutations require manage_woocommerce, POST requests, and purpose-specif
 Report vulnerabilities privately to the site/plugin owner. Do not publish exploitable details before a fix is available. See SECURITY.md in the plugin package.
 
 == Changelog ==
+
+= 0.3.0 =
+
+* Added billing_delivery_area directly to the dynamic Checkout Fields manager.
+* Added secure AJAX total refresh and server-side delivery fees of 60, 90, or 120.
+* Saved the selected delivery area with the order through WooCommerce CRUD APIs.
 
 = 0.2.0 =
 

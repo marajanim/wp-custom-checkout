@@ -53,5 +53,8 @@
 	}
 
 	$(arrangeCheckout);
+	$(document.body).on('change', 'input[name="billing_delivery_area"]', function () {
+		$(document.body).trigger('update_checkout');
+	});
 	$(document.body).on('updated_checkout payment_method_selected', arrangeCheckout);
 }(jQuery));

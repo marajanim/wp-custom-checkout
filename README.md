@@ -4,7 +4,7 @@ A secure, dynamic classic checkout builder for WooCommerce and the WoodMart them
 
 ## Current development release
 
-Version `0.2.0` includes:
+Version `0.3.0` includes:
 
 - Responsive custom classic-checkout layout.
 - Dynamic WooCommerce field manager.
@@ -12,7 +12,7 @@ Version `0.2.0` includes:
 - Labels, placeholders, ordering, widths, and checkout sections.
 - HPOS-compatible custom checkout fields.
 - Configurable terms, privacy, refund, and delivery-policy agreement.
-- Three selectable Bengali delivery-area rates for Dhaka and surrounding regions.
+- A required Bengali delivery-area radio field with server-calculated charges of 60, 90, or 120.
 - Capability, nonce, validation, sanitization, and escaping protections.
 - Safe fallback when the plugin is disabled.
 
@@ -22,7 +22,7 @@ Version `0.2.0` includes:
 - PHP 7.4 or newer.
 - WooCommerce 8.5 or newer.
 - Classic checkout shortcode: `[woocommerce_checkout]`.
-- Checkout Block customization is intentionally unsupported in version 0.1.
+- Checkout Block customization is intentionally unsupported in version 0.3.
 
 ## Installation
 
@@ -31,9 +31,9 @@ Version `0.2.0` includes:
 3. Activate WooCommerce and then activate WCCP Custom Checkout.
 4. Open **WooCommerce > Custom Checkout**.
 5. Configure the layout, policy links, and checkout fields.
-6. Open **WooCommerce > Settings > Shipping > Shipping zones**, edit the Bangladesh/Dhaka zone, and add **WCCP Delivery Areas**.
-7. Keep the default rates at 60, 90, and 120 or edit them in the shipping-method settings. Disable any old flat rate that would duplicate these choices.
-8. Test every enabled payment gateway and shipping method before production use.
+6. Under **Checkout Fields > Billing**, configure `billing_delivery_area` like the other fields. It is enabled and required by default.
+7. Set any existing WooCommerce flat-rate shipping charge to zero or disable it if it would duplicate this delivery fee.
+8. Confirm that choosing an area refreshes the order total and adds the correct delivery charge, then test every enabled payment gateway.
 
 Do not remove the existing child-theme checkout snippet until the plugin passes staging tests. See [readme.txt](readme.txt) and [SECURITY.md](SECURITY.md) for additional instructions.
 
