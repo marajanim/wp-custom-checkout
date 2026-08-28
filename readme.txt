@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, woodmart
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.8.0
+Stable tag: 0.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Settings mutations require manage_woocommerce, POST requests, and purpose-specif
 Report vulnerabilities privately to the site/plugin owner. Do not publish exploitable details before a fix is available. See SECURITY.md in the plugin package.
 
 == Changelog ==
+
+= 0.8.1 =
+
+* Removed the duplicate minus, quantity input, and plus controls from checkout order rows.
+* Kept the server-rendered read-only Quantity badge visible after checkout AJAX refreshes.
 
 = 0.8.0 =
 

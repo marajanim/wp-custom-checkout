@@ -73,6 +73,9 @@
 		var heading = form.querySelector('#order_review_heading');
 		var review = form.querySelector('#order_review');
 		var payment = form.querySelector('.woocommerce-checkout-payment');
+		form.querySelectorAll('#order_review .quantity').forEach(function (quantityControl) {
+			quantityControl.remove();
+		});
 		if (payment) {
 			ensurePaymentHeading(payment, config);
 		}
