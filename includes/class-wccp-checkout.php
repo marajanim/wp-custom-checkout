@@ -23,6 +23,7 @@ final class WCCP_Checkout {
 		add_filter( 'woocommerce_cart_item_name', array( $this, 'cart_item_name' ), 20, 3 );
 		add_filter( 'woocommerce_ship_to_different_address_checked', array( $this, 'shipping_checked' ) );
 		add_filter( 'woocommerce_checkout_get_value', array( $this, 'checkout_field_value' ), 999, 2 );
+		add_filter( 'woocommerce_persistent_cart_enabled', array( $this, 'persistent_cart_enabled' ), 999 );
 		add_filter( 'wp_headers', array( $this, 'private_checkout_headers' ), PHP_INT_MAX );
 		add_action( 'template_redirect', array( $this, 'mark_checkout_private' ), PHP_INT_MAX );
 	}
@@ -92,6 +93,12 @@ final class WCCP_Checkout {
 			'shipping_city', 'shipping_postcode',
 		);
 		return in_array( $input, $private_fields, true ) ? '' : $value;
+	}
+
+	/** Keep carts device-session-specific unless the merchant explicitly enables account persistence. */
+	public function persistent_cart_enabled( $enabled ) {
+		$settings = WCCP_Defaults::get_settings();
+		return 'yes' === $settings['share_cart_across_devices'] ? $enabled : false;
 	}
 
 	/**

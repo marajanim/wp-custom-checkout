@@ -312,6 +312,7 @@ final class WCCP_Admin {
 				$this->checkbox_row( $s, 'enable_layout', __( 'Custom checkout layout', 'wccp-custom-checkout' ) );
 				$this->number_row( $s, 'font_size', __( 'Checkout font size', 'wccp-custom-checkout' ), 13, 22, __( 'Controls checkout labels, inputs, delivery choices, order details, totals, and headings. Default: 15px.', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'prefill_customer_details', __( 'Prefill saved customer details', 'wccp-custom-checkout' ), __( 'Disabled by default for privacy. Enable only when each shopper uses a private account and should see their saved billing and shipping details.', 'wccp-custom-checkout' ) );
+				$this->checkbox_row( $s, 'share_cart_across_devices', __( 'Share logged-in cart across devices', 'wccp-custom-checkout' ), __( 'Disabled by default. When disabled, WooCommerce ignores the account-level persistent cart and each device keeps only its own session cart.', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_progress', __( 'Checkout progress banner', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_coupon', __( 'Coupon prompt and form', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_billing_heading', __( 'Billing Details heading', 'wccp-custom-checkout' ) );
