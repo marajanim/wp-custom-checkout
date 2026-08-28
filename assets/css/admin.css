@@ -27,6 +27,8 @@
 .wccp-color { width: 90px; min-height: 34px; }
 #wccp-field-search { margin-bottom: 12px; }
 .wccp-delivery-editor { margin: 18px 0 24px; padding: 16px; border: 1px solid #dcdcde; border-radius: 5px; background: #f6f7f7; }
+.wccp-delivery-editor-row > td { padding: 12px !important; background: #fff; }
+.wccp-delivery-editor-row .wccp-delivery-editor { margin: 0; }
 .wccp-delivery-editor h2 { margin: 0 0 5px; }
 .wccp-delivery-editor-grid { display: grid; grid-template-columns: repeat(3, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
 .wccp-delivery-editor-item { display: grid; grid-template-columns: minmax(0, 1fr) 90px; gap: 10px; padding: 12px; border: 1px solid #dcdcde; border-radius: 4px; background: #fff; }
@@ -34,6 +36,7 @@
 .wccp-delivery-editor-item label { font-weight: 600; }
 .wccp-delivery-editor-item input[type='text'] { width: 100%; }
 .wccp-delivery-editor-item input.small-text { width: 90px; }
+.wccp-delivery-editor-actions { margin: 14px 0 0; }
 @media (max-width: 782px) {
 	.wccp-settings-form,
 	.wccp-custom-editor,

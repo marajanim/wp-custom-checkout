@@ -360,7 +360,6 @@ final class WCCP_Admin {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="wccp_save_fields">
 				<?php wp_nonce_field( 'wccp_save_fields' ); ?>
-				<?php $this->render_delivery_areas_editor(); ?>
 				<?php foreach ( $groups as $group_key => $fields ) : ?>
 					<?php if ( ! is_array( $fields ) || empty( $fields ) ) { continue; } ?>
 					<h2><?php echo esc_html( ucfirst( sanitize_key( $group_key ) ) ); ?></h2>
@@ -380,7 +379,7 @@ final class WCCP_Admin {
 							);
 							$config = isset( $saved[ $key ] ) ? wp_parse_args( $saved[ $key ], $default ) : $default;
 							?>
-							<tr draggable="true" data-wccp-field-row data-search="<?php echo esc_attr( strtolower( $key . ' ' . $config['label'] ) ); ?>">
+							<tr draggable="true" data-wccp-field-row data-wccp-field-key="<?php echo esc_attr( $key ); ?>" data-search="<?php echo esc_attr( strtolower( $key . ' ' . $config['label'] ) ); ?>">
 								<td><span class="wccp-drag-handle" aria-hidden="true">⋮⋮</span><strong><?php echo esc_html( $key ); ?></strong><br><code><?php echo esc_html( isset( $field['type'] ) ? $field['type'] : 'text' ); ?></code><?php if ( in_array( $key, $critical, true ) ) : ?><span class="wccp-risk"><?php esc_html_e( 'Integration-sensitive', 'wccp-custom-checkout' ); ?></span><?php endif; ?></td>
 								<td><?php $this->field_toggle( $key, 'enabled', $config['enabled'] ); ?></td>
 								<td><?php $this->field_toggle( $key, 'required', $config['required'] ); ?></td>
@@ -390,6 +389,9 @@ final class WCCP_Admin {
 								<td><?php $this->width_select( 'fields[' . $key . '][width]', $config['width'] ); ?></td>
 								<td><label><input type="checkbox" name="reset_fields[]" value="<?php echo esc_attr( $key ); ?>"> <?php esc_html_e( 'Default', 'wccp-custom-checkout' ); ?></label></td>
 							</tr>
+							<?php if ( WCCP_Delivery_Area::FIELD_KEY === $key ) : ?>
+							<tr class="wccp-delivery-editor-row" data-wccp-delivery-editor-row><td colspan="8"><?php $this->render_delivery_areas_editor(); ?></td></tr>
+							<?php endif; ?>
 						<?php endforeach; ?>
 						</tbody>
 					</table></div>
@@ -426,6 +428,7 @@ final class WCCP_Admin {
 				</div>
 			<?php endforeach; ?>
 			</div>
+			<p class="wccp-delivery-editor-actions"><button type="submit" class="button button-primary"><?php esc_html_e( 'Save delivery areas', 'wccp-custom-checkout' ); ?></button></p>
 		</section>
 		<?php
 	}

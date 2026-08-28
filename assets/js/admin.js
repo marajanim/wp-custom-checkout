@@ -15,6 +15,12 @@
 			var query = search.value.toLowerCase().trim();
 			document.querySelectorAll('[data-wccp-field-row]').forEach(function (row) {
 				row.hidden = query !== '' && row.getAttribute('data-search').indexOf(query) === -1;
+				if (row.getAttribute('data-wccp-field-key') === 'billing_delivery_area') {
+					var editor = row.parentNode.querySelector('[data-wccp-delivery-editor-row]');
+					if (editor) {
+						editor.hidden = row.hidden;
+					}
+				}
 			});
 		});
 	}
@@ -34,6 +40,11 @@
 					priority.value = String((index + 1) * 10);
 				}
 			});
+			var deliveryRow = row.closest('tbody').querySelector('[data-wccp-field-key="billing_delivery_area"]');
+			var deliveryEditor = row.closest('tbody').querySelector('[data-wccp-delivery-editor-row]');
+			if (deliveryRow && deliveryEditor) {
+				deliveryRow.insertAdjacentElement('afterend', deliveryEditor);
+			}
 		});
 		row.addEventListener('dragover', function (event) {
 			if (!draggedRow || draggedRow === row || draggedRow.parentNode !== row.parentNode) {

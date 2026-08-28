@@ -4,7 +4,7 @@ A secure, dynamic classic checkout builder for WooCommerce and the WoodMart them
 
 ## Current development release
 
-Version `0.5.0` includes:
+Version `0.5.1` includes:
 
 - Responsive custom classic-checkout layout.
 - Dynamic WooCommerce field manager.
