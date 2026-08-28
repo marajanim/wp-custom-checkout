@@ -21,6 +21,7 @@ final class WCCP_Checkout {
 		add_filter( 'woocommerce_terms_is_checked_default', array( $this, 'agreement_checked' ) );
 		add_filter( 'woocommerce_checkout_show_terms', array( $this, 'show_terms' ) );
 		add_filter( 'woocommerce_cart_item_name', array( $this, 'cart_item_name' ), 20, 3 );
+		add_filter( 'woocommerce_checkout_cart_item_quantity', array( $this, 'checkout_cart_item_quantity' ), PHP_INT_MAX, 3 );
 		add_filter( 'woocommerce_ship_to_different_address_checked', array( $this, 'shipping_checked' ) );
 		add_filter( 'woocommerce_checkout_get_value', array( $this, 'checkout_field_value' ), 999, 2 );
 		add_filter( 'woocommerce_persistent_cart_enabled', array( $this, 'persistent_cart_enabled' ), 999 );
@@ -277,6 +278,17 @@ final class WCCP_Checkout {
 			$meta = '<small class="wccp-product-sku">' . esc_html__( 'SKU:', 'wccp-custom-checkout' ) . ' ' . esc_html( $product->get_sku() ) . '</small>';
 		}
 		return '<span class="wccp-product-name">' . wp_kses_post( $image ) . '<span class="wccp-product-copy">' . wp_kses_post( $name ) . $meta . $quantity_html . '</span></span>';
+	}
+
+	/**
+	 * Remove WoodMart/WooCommerce interactive quantity controls from checkout.
+	 *
+	 * The cart item name already contains the server-rendered read-only quantity
+	 * badge, so checkout does not need a second quantity element.
+	 */
+	public function checkout_cart_item_quantity( $quantity_html, $cart_item, $cart_item_key ) {
+		unset( $cart_item, $cart_item_key );
+		return $this->is_classic_checkout_request() ? '' : $quantity_html;
 	}
 
 	/**

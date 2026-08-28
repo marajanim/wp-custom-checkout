@@ -122,7 +122,10 @@
 .wccp-enabled #order_review .shop_table .product-name { min-width: 0; overflow-wrap: anywhere; vertical-align: top; }
 .wccp-enabled #order_review .shop_table .product-total { width: 84px; white-space: nowrap; vertical-align: top; }
 .wccp-enabled #order_review .shop_table .product-name img { max-width: 56px; height: auto; }
-.wccp-enabled #order_review .quantity {
+.wccp-enabled #order_review .quantity,
+.wccp-enabled #order_review input.qty,
+.wccp-enabled #order_review .minus,
+.wccp-enabled #order_review .plus {
 	display: none !important;
 }
 .wccp-enabled .wccp-checkout-main > div[hidden],
