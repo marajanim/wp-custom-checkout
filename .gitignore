@@ -1,0 +1,30 @@
+# Release and build artifacts
+*.zip
+dist/
+build/
+
+# Dependencies and test environments
+vendor/
+node_modules/
+.wp-env/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+auth.json
+*.pem
+*.key
+
+# Editor and operating-system files
+.idea/
+.vscode/
+*.code-workspace
+.DS_Store
+Thumbs.db
+
+# Logs, caches, and test output
+*.log
+.phpunit.result.cache
+coverage/
+.cache/

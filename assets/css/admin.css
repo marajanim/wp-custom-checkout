@@ -1,0 +1,33 @@
+.wccp-admin-wrap { max-width: 1280px; }
+.wccp-admin-wrap .nav-tab-wrapper { margin: 20px 0; }
+.wccp-settings-form,
+.wccp-custom-editor,
+.wccp-field-manager {
+	margin-top: 18px;
+	padding: 20px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #fff;
+}
+.wccp-settings-form h2,
+.wccp-custom-editor h2 { padding-top: 14px; border-top: 1px solid #eee; }
+.wccp-settings-form h2:first-child { padding-top: 0; border-top: 0; }
+.wccp-reset-form { display: inline-block; margin: 14px 0; }
+.wccp-table-scroll { overflow-x: auto; }
+.wccp-fields-table { min-width: 1050px; }
+.wccp-fields-table td { vertical-align: middle; }
+.wccp-fields-table tr.is-dragging { opacity: .45; }
+.wccp-drag-handle { display: inline-block; margin-right: 7px; color: #646970; cursor: move; font-weight: 700; }
+.wccp-fields-table input[type='text'] { width: 100%; min-width: 180px; }
+.wccp-fields-table input[type='text'] + input { margin-top: 5px; }
+.wccp-risk { display: block; margin-top: 5px; color: #8a2424; font-size: 11px; font-weight: 600; }
+.wccp-inline-form { display: inline-block; margin-left: 6px; }
+.wccp-custom-list { margin: 12px 0 24px; }
+.wccp-custom-editor { max-width: 900px; }
+.wccp-color { width: 90px; min-height: 34px; }
+#wccp-field-search { margin-bottom: 12px; }
+@media (max-width: 782px) {
+	.wccp-settings-form,
+	.wccp-custom-editor,
+	.wccp-field-manager { padding: 12px; }
+}
