@@ -53,6 +53,7 @@ final class WCCP_Defaults {
 	public static function settings() {
 		return array(
 			'enable_layout'          => 'yes',
+			'font_size'              => '15',
 			'enable_agreement'       => 'yes',
 			'agreement_intro'        => 'I have read and agree to the',
 			'open_links_new_tab'     => 'yes',

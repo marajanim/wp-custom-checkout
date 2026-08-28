@@ -57,6 +57,9 @@ final class WCCP_Settings {
 			$clean[ $key ] = $value ? $value : $defaults[ $key ];
 		}
 
+		$font_size = isset( $raw['font_size'] ) && is_scalar( $raw['font_size'] ) ? absint( $raw['font_size'] ) : absint( $defaults['font_size'] );
+		$clean['font_size'] = (string) max( 13, min( 22, $font_size ) );
+
 		return $clean;
 	}
 

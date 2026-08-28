@@ -50,12 +50,14 @@ final class WCCP_Checkout {
 		wp_enqueue_script( 'wccp-checkout', WCCP_URL . 'assets/js/frontend.js', array( 'jquery' ), file_exists( $js_path ) ? (string) filemtime( $js_path ) : WCCP_VERSION, true );
 
 		$settings = WCCP_Defaults::get_settings();
+		$font_size = max( 13, min( 22, absint( $settings['font_size'] ) ) );
 		$variables = sprintf(
-			'.wccp-enabled{--wccp-primary:%1$s;--wccp-button:%2$s;--wccp-background:%3$s;--wccp-border:%4$s;}',
+			'.wccp-enabled{--wccp-primary:%1$s;--wccp-button:%2$s;--wccp-background:%3$s;--wccp-border:%4$s;--wccp-font-size:%5$dpx;}',
 			esc_attr( $settings['primary_color'] ),
 			esc_attr( $settings['button_color'] ),
 			esc_attr( $settings['background_color'] ),
-			esc_attr( $settings['border_color'] )
+			esc_attr( $settings['border_color'] ),
+			$font_size
 		);
 		wp_add_inline_style( 'wccp-checkout', $variables );
 		wp_localize_script(

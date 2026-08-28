@@ -2,7 +2,7 @@
 
 ## Supported release
 
-The current 0.5.x line receives security fixes during active development. Keep WordPress, WooCommerce, WoodMart, payment gateways, and this plugin updated. WooCommerce states that only its latest release is considered fully secure.
+The current 0.6.x line receives security fixes during active development. Keep WordPress, WooCommerce, WoodMart, payment gateways, and this plugin updated. WooCommerce states that only its latest release is considered fully secure.
 
 ## Reporting
 

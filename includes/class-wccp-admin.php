@@ -285,6 +285,19 @@ final class WCCP_Admin {
 		<?php
 	}
 
+	/** Output a constrained numeric setting row. */
+	private function number_row( $settings, $key, $label, $min, $max, $description = '' ) {
+		?>
+		<tr>
+			<th scope="row"><label for="wccp-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?></label></th>
+			<td>
+				<input class="small-text" id="wccp-<?php echo esc_attr( $key ); ?>" type="number" name="settings[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $settings[ $key ] ); ?>" min="<?php echo esc_attr( $min ); ?>" max="<?php echo esc_attr( $max ); ?>" step="1" required> px
+				<?php if ( $description ) : ?><p class="description"><?php echo esc_html( $description ); ?></p><?php endif; ?>
+			</td>
+		</tr>
+		<?php
+	}
+
 	/** Render layout, feature, policy, and color settings. */
 	private function render_general() {
 		$s = WCCP_Defaults::get_settings();
@@ -296,6 +309,7 @@ final class WCCP_Admin {
 			<table class="form-table" role="presentation"><tbody>
 				<?php
 				$this->checkbox_row( $s, 'enable_layout', __( 'Custom checkout layout', 'wccp-custom-checkout' ) );
+				$this->number_row( $s, 'font_size', __( 'Checkout font size', 'wccp-custom-checkout' ), 13, 22, __( 'Controls checkout labels, inputs, delivery choices, order details, totals, and headings. Default: 15px.', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_progress', __( 'Checkout progress banner', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_coupon', __( 'Coupon prompt and form', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_billing_heading', __( 'Billing Details heading', 'wccp-custom-checkout' ) );
