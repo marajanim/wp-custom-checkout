@@ -175,18 +175,20 @@ final class WCCP_Checkout {
 	 */
 	public function cart_item_name( $name, $cart_item, $cart_item_key ) {
 		unset( $cart_item_key );
-		if ( ! $this->is_classic_checkout_request() || false !== strpos( $name, 'wccp-product-name' ) ) {
+		if ( ! $this->is_classic_checkout_request() || false !== strpos( $name, 'wccp-order-quantity' ) ) {
 			return $name;
 		}
+		$quantity = isset( $cart_item['quantity'] ) && is_numeric( $cart_item['quantity'] ) ? max( 1, absint( $cart_item['quantity'] ) ) : 1;
+		$quantity_html = '<span class="wccp-order-quantity"><span>' . esc_html__( 'Quantity:', 'wccp-custom-checkout' ) . '</span> <strong>' . esc_html( (string) $quantity ) . '</strong></span>';
 		$theme = function_exists( 'wp_get_theme' ) ? wp_get_theme() : null;
 		$template = $theme && is_callable( array( $theme, 'get_template' ) ) ? strtolower( (string) $theme->get_template() ) : '';
 		if ( false !== strpos( $template, 'woodmart' ) ) {
-			return $name;
+			return $name . $quantity_html;
 		}
 		$settings = WCCP_Defaults::get_settings();
 		$product  = isset( $cart_item['data'] ) && $cart_item['data'] instanceof WC_Product ? $cart_item['data'] : null;
 		if ( ! $product ) {
-			return $name;
+			return $name . $quantity_html;
 		}
 
 		$image = '';
@@ -197,7 +199,7 @@ final class WCCP_Checkout {
 		if ( 'yes' === $settings['show_product_meta'] && $product->get_sku() ) {
 			$meta = '<small class="wccp-product-sku">' . esc_html__( 'SKU:', 'wccp-custom-checkout' ) . ' ' . esc_html( $product->get_sku() ) . '</small>';
 		}
-		return '<span class="wccp-product-name">' . wp_kses_post( $image ) . '<span class="wccp-product-copy">' . wp_kses_post( $name ) . $meta . '</span></span>';
+		return '<span class="wccp-product-name">' . wp_kses_post( $image ) . '<span class="wccp-product-copy">' . wp_kses_post( $name ) . $meta . $quantity_html . '</span></span>';
 	}
 
 	/**

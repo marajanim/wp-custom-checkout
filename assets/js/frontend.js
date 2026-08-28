@@ -52,26 +52,6 @@
 		});
 	}
 
-	function syncQuantityDisplay(quantity) {
-		var control = quantity.querySelector('input.qty, select.qty');
-		if (!control) {
-			return;
-		}
-		var display = quantity.querySelector('.wccp-quantity-value');
-		if (!display) {
-			display = document.createElement('span');
-			display.className = 'wccp-quantity-value';
-			display.setAttribute('aria-hidden', 'true');
-			control.insertAdjacentElement('afterend', display);
-		}
-		control.classList.add('wccp-quantity-native');
-		display.textContent = control.value !== '' ? control.value : (control.getAttribute('value') || '1');
-	}
-
-	function syncQuantityDisplays(root) {
-		root.querySelectorAll('#order_review .quantity').forEach(syncQuantityDisplay);
-	}
-
 	function arrangeCheckout() {
 		var config = window.wccpCheckout || {};
 		var form = document.querySelector('form.woocommerce-checkout');
@@ -110,7 +90,6 @@
 		}
 		removeOrphanContainers(form, grid);
 		hideEmptyArtifacts(grid);
-		syncQuantityDisplays(form);
 
 		var billingHeading = form.querySelector('.woocommerce-billing-fields > h3');
 		if (billingHeading) {
@@ -126,15 +105,6 @@
 	$(arrangeCheckout);
 	$(document.body).on('change', 'input[name="billing_delivery_area"]', function () {
 		$(document.body).trigger('update_checkout');
-	});
-	$(document.body).on('input change', '#order_review .quantity .qty', function () {
-		syncQuantityDisplay(this.closest('.quantity'));
-	});
-	$(document.body).on('click', '#order_review .quantity .minus, #order_review .quantity .plus', function () {
-		var quantity = this.closest('.quantity');
-		window.setTimeout(function () {
-			syncQuantityDisplay(quantity);
-		}, 0);
 	});
 	$(document.body).on('updated_checkout payment_method_selected', arrangeCheckout);
 }(jQuery));

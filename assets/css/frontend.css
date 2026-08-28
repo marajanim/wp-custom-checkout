@@ -142,9 +142,13 @@
 	border-radius: 0;
 	box-sizing: border-box;
 	color: #172033 !important;
+	-webkit-text-fill-color: #172033 !important;
 	font-size: 14px !important;
 	font-weight: 500;
 	line-height: 32px;
+	opacity: 1 !important;
+	visibility: visible !important;
+	text-indent: 0 !important;
 	text-align: center;
 	-webkit-appearance: textfield;
 	appearance: textfield;
@@ -171,47 +175,8 @@
 	line-height: 1;
 }
 .wccp-enabled #order_review .quantity .minus { grid-row: 1; grid-column: 1; }
+.wccp-enabled #order_review .quantity input.qty { grid-row: 1; grid-column: 2; }
 .wccp-enabled #order_review .quantity .plus { grid-row: 1; grid-column: 3; border-radius: 0 4px 4px 0; }
-.wccp-enabled #order_review .quantity .qty.wccp-quantity-native {
-	position: relative !important;
-	z-index: 2;
-	grid-row: 1;
-	grid-column: 2;
-	width: 40px !important;
-	min-width: 40px !important;
-	height: 34px !important;
-	min-height: 34px !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	border: 0 !important;
-	opacity: 0 !important;
-	cursor: text;
-	pointer-events: auto;
-}
-.wccp-enabled #order_review .quantity .wccp-quantity-value {
-	display: inline-flex;
-	z-index: 1;
-	grid-row: 1;
-	grid-column: 2;
-	align-items: center;
-	justify-content: center;
-	width: 40px;
-	height: 34px;
-	box-sizing: border-box;
-	border-top: 1px solid #c7d0dc;
-	border-bottom: 1px solid #c7d0dc;
-	background: #fff;
-	color: #172033;
-	font-size: 14px;
-	font-weight: 600;
-	font-variant-numeric: tabular-nums;
-	line-height: 1;
-	pointer-events: none;
-}
-.wccp-enabled #order_review .quantity .qty.wccp-quantity-native:focus + .wccp-quantity-value {
-	outline: 2px solid rgba(8, 98, 189, .3);
-	outline-offset: 1px;
-}
 .wccp-enabled .wccp-checkout-main > div[hidden],
 .wccp-enabled .wccp-checkout-sidebar > div[hidden] { display: none !important; }
 
@@ -219,6 +184,22 @@
 .wccp-product-image { width: 64px; height: 64px; flex: 0 0 64px; border-radius: 4px; object-fit: cover; }
 .wccp-product-copy { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
 .wccp-product-sku { display: block; color: #626c78; font-size: 11px; }
+.wccp-order-quantity {
+	display: flex;
+	width: max-content;
+	max-width: 100%;
+	align-items: center;
+	gap: 5px;
+	margin-top: 7px;
+	padding: 3px 8px;
+	border: 1px solid #c7d0dc;
+	border-radius: 4px;
+	background: #f8fafc;
+	color: #172033;
+	font-size: 14px;
+	line-height: 1.35;
+}
+.wccp-order-quantity strong { color: #052779; font-size: 15px; font-variant-numeric: tabular-nums; }
 
 .wccp-enabled form.checkout .form-row { margin-bottom: 17px; }
 
