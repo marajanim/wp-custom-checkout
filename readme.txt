@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, woodmart
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Settings mutations require manage_woocommerce, POST requests, and purpose-specif
 Report vulnerabilities privately to the site/plugin owner. Do not publish exploitable details before a fix is available. See SECURITY.md in the plugin package.
 
 == Changelog ==
+
+= 0.5.2 =
+
+* Increased checkout label, input, option, and heading readability.
+* Added clearer input borders, spacing, placeholder contrast, and focus states.
 
 = 0.5.1 =
 
