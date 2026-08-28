@@ -45,6 +45,9 @@ final class WCCP_Plugin {
 		$this->fields = new WCCP_Fields();
 		$this->fields->hooks();
 
+		$checkout_security = new WCCP_Checkout_Security();
+		$checkout_security->hooks();
+
 		$checkout = new WCCP_Checkout();
 		$checkout->hooks();
 

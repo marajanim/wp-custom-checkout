@@ -4,7 +4,7 @@ A secure, dynamic classic checkout builder for WooCommerce and the WoodMart them
 
 ## Current development release
 
-Version `0.7.1` includes:
+Version `0.8.0` includes:
 
 - Responsive custom classic-checkout layout.
 - Dynamic WooCommerce field manager.
@@ -19,6 +19,7 @@ Version `0.7.1` includes:
 - Private/no-store checkout headers and a privacy-first saved-detail prefill switch.
 - A device-session-only cart mode that disables logged-in persistent cart sharing by default.
 - Capability, nonce, validation, sanitization, and escaping protections.
+- Server-side checkout abuse protection with a bot honeypot, strict request/field limits, active-content rejection, and short suspicious-attempt rate limiting.
 - Safe fallback when the plugin is disabled.
 
 ## Compatibility

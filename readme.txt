@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, woodmart
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.7.1
+Stable tag: 0.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,11 +66,18 @@ No. Optional uninstall cleanup removes plugin configuration only. Historical ord
 
 == Security ==
 
-Settings mutations require manage_woocommerce, POST requests, and purpose-specific nonces. Inputs use explicit allowlists, output is contextually escaped, custom content uses a narrow HTML allowlist, and order values use WooCommerce CRUD APIs. There are no runtime dependencies, remote scripts, telemetry, uploads, REST routes, or custom SQL queries.
+Settings mutations require manage_woocommerce, POST requests, and purpose-specific nonces. Inputs use explicit allowlists, output is contextually escaped, custom content uses a narrow HTML allowlist, and order values use WooCommerce CRUD APIs. Public checkout validation adds a honeypot, request and field-length limits, active-content rejection, and short rate limiting after suspicious attempts. Rejected payloads and raw IP addresses are not stored by these protections. There are no runtime dependencies, remote scripts, telemetry, uploads, REST routes, or custom SQL queries.
 
 Report vulnerabilities privately to the site/plugin owner. Do not publish exploitable details before a fix is available. See SECURITY.md in the plugin package.
 
 == Changelog ==
+
+= 0.8.0 =
+
+* Added server-side bot honeypot validation without storing the trap value.
+* Added request-size, field-count, scalar-type, and per-field length limits.
+* Rejected browser-executable payloads and control characters from customer-authored checkout fields.
+* Added hashed-identity, short-term WooCommerce rate limiting after suspicious attempts.
 
 = 0.7.1 =
 

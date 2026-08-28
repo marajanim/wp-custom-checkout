@@ -2,7 +2,7 @@
 
 ## Supported release
 
-The current 0.7.x line receives security fixes during active development. Keep WordPress, WooCommerce, WoodMart, payment gateways, and this plugin updated. WooCommerce states that only its latest release is considered fully secure.
+The current 0.8.x line receives security fixes during active development. Keep WordPress, WooCommerce, WoodMart, payment gateways, and this plugin updated. WooCommerce states that only its latest release is considered fully secure.
 
 ## Reporting
 
@@ -29,6 +29,8 @@ Suggested response targets:
 - WooCommerce order CRUD APIs for HPOS compatibility; no custom SQL.
 - No uploads, eval-like execution, shell calls, dynamic includes, public REST/AJAX mutation endpoints, remote scripts, telemetry, or runtime dependencies.
 - No storage or logging of payment credentials.
+- Public checkout submissions use a non-persistent honeypot, request and field-length ceilings, scalar-type checks, control/active-content rejection, and WooCommerce's rate limiter after suspicious attempts.
+- Limiter identifiers are keyed hashes; rejected values and raw IP addresses are not stored or reflected in validation messages.
 - Safe deactivation and opt-in configuration cleanup; order metadata is never removed automatically.
 
 ## Data map
