@@ -43,6 +43,6 @@ Visibility of custom order values is independently configurable for admin orders
 
 ## Release process
 
-Before release, run PHP lint, JavaScript syntax checks, secret/pattern scans, package inventory, manual capability/nonce review, and the staging checklist in TESTING.md. Review every change touching authorization, request handling, rendering, order data, redirects, dependencies, or payment layout. Record the package SHA-256 checksum and retain the prior ZIP for rollback.
+Before release, run PHP lint, JavaScript syntax checks, secret/pattern scans, package inventory, manual capability/nonce review, and a complete staging checkout test. Review every change touching authorization, request handling, rendering, order data, redirects, dependencies, or payment layout. Record the package SHA-256 checksum and retain the prior ZIP for rollback.
 
 Security fixes ship separately from feature work when necessary. If exploitation is suspected, disable the custom layout or deactivate the plugin, preserve relevant redacted logs, rotate any unrelated exposed credentials, update affected components, and retest checkout before reactivation.

@@ -32,11 +32,7 @@ Version `0.1.0` includes:
 5. Configure the layout, policy links, and checkout fields.
 6. Test every enabled payment gateway and shipping method before production use.
 
-Do not remove the existing child-theme checkout snippet until the plugin passes staging tests. See [readme.txt](readme.txt), [TESTING.md](TESTING.md), and [SECURITY.md](SECURITY.md) for full instructions.
-
-## Requirements
-
-The implementation specification is maintained in [requirement.md](requirement.md).
+Do not remove the existing child-theme checkout snippet until the plugin passes staging tests. See [readme.txt](readme.txt) and [SECURITY.md](SECURITY.md) for additional instructions.
 
 ## License
 
