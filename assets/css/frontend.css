@@ -170,7 +170,48 @@
 	font-size: 14px;
 	line-height: 1;
 }
-.wccp-enabled #order_review .quantity .plus { border-radius: 0 4px 4px 0; }
+.wccp-enabled #order_review .quantity .minus { grid-row: 1; grid-column: 1; }
+.wccp-enabled #order_review .quantity .plus { grid-row: 1; grid-column: 3; border-radius: 0 4px 4px 0; }
+.wccp-enabled #order_review .quantity .qty.wccp-quantity-native {
+	position: relative !important;
+	z-index: 2;
+	grid-row: 1;
+	grid-column: 2;
+	width: 40px !important;
+	min-width: 40px !important;
+	height: 34px !important;
+	min-height: 34px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+	opacity: 0 !important;
+	cursor: text;
+	pointer-events: auto;
+}
+.wccp-enabled #order_review .quantity .wccp-quantity-value {
+	display: inline-flex;
+	z-index: 1;
+	grid-row: 1;
+	grid-column: 2;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 34px;
+	box-sizing: border-box;
+	border-top: 1px solid #c7d0dc;
+	border-bottom: 1px solid #c7d0dc;
+	background: #fff;
+	color: #172033;
+	font-size: 14px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	pointer-events: none;
+}
+.wccp-enabled #order_review .quantity .qty.wccp-quantity-native:focus + .wccp-quantity-value {
+	outline: 2px solid rgba(8, 98, 189, .3);
+	outline-offset: 1px;
+}
 .wccp-enabled .wccp-checkout-main > div[hidden],
 .wccp-enabled .wccp-checkout-sidebar > div[hidden] { display: none !important; }
 
