@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, woodmart
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.6.3
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ Settings mutations require manage_woocommerce, POST requests, and purpose-specif
 Report vulnerabilities privately to the site/plugin owner. Do not publish exploitable details before a fix is available. See SECURITY.md in the plugin package.
 
 == Changelog ==
+
+= 0.7.0 =
+
+* Added private/no-store checkout response headers for browsers, proxies, CDNs, and supported caching plugins.
+* Added a privacy-first setting that disables saved personal-detail prefilling by default on fresh checkout pages.
+* Added a prominent administration warning to exclude WooCommerce customer-specific pages from full-page caching.
 
 = 0.6.3 =
 

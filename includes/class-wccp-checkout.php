@@ -22,6 +22,76 @@ final class WCCP_Checkout {
 		add_filter( 'woocommerce_checkout_show_terms', array( $this, 'show_terms' ) );
 		add_filter( 'woocommerce_cart_item_name', array( $this, 'cart_item_name' ), 20, 3 );
 		add_filter( 'woocommerce_ship_to_different_address_checked', array( $this, 'shipping_checked' ) );
+		add_filter( 'woocommerce_checkout_get_value', array( $this, 'checkout_field_value' ), 999, 2 );
+		add_filter( 'wp_headers', array( $this, 'private_checkout_headers' ), PHP_INT_MAX );
+		add_action( 'template_redirect', array( $this, 'mark_checkout_private' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * Prevent page caches and reverse proxies from storing customer-specific checkout HTML.
+	 */
+	public function mark_checkout_private() {
+		if ( ! $this->is_checkout_request() ) {
+			return;
+		}
+		if ( class_exists( 'WC_Cache_Helper' ) ) {
+			WC_Cache_Helper::set_nocache_constants();
+		} elseif ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+		if ( headers_sent() ) {
+			return;
+		}
+		if ( function_exists( 'wc_nocache_headers' ) ) {
+			wc_nocache_headers();
+		} else {
+			nocache_headers();
+		}
+		header( 'Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0', true );
+		header( 'CDN-Cache-Control: no-store', true );
+		header( 'Surrogate-Control: no-store', true );
+		header( 'X-Accel-Expires: 0', true );
+	}
+
+	/** Add explicit private response headers at the latest WordPress header-filter priority. */
+	public function private_checkout_headers( $headers ) {
+		if ( ! $this->is_checkout_request() ) {
+			return $headers;
+		}
+		if ( class_exists( 'WC_Cache_Helper' ) ) {
+			WC_Cache_Helper::set_nocache_constants();
+		}
+		$headers['Cache-Control']     = 'private, no-store, no-cache, must-revalidate, max-age=0';
+		$headers['Pragma']            = 'no-cache';
+		$headers['Expires']           = 'Wed, 11 Jan 1984 05:00:00 GMT';
+		$headers['CDN-Cache-Control'] = 'no-store';
+		$headers['Surrogate-Control'] = 'no-store';
+		$headers['X-Accel-Expires']   = '0';
+		$vary = isset( $headers['Vary'] ) ? (string) $headers['Vary'] : '';
+		if ( false === stripos( $vary, 'Cookie' ) ) {
+			$headers['Vary'] = '' === $vary ? 'Cookie' : $vary . ', Cookie';
+		}
+		unset( $headers['ETag'], $headers['Last-Modified'] );
+		return $headers;
+	}
+
+	/**
+	 * Optionally prevent saved account/session PII from prefilling a fresh checkout page.
+	 */
+	public function checkout_field_value( $value, $input ) {
+		$settings = WCCP_Defaults::get_settings();
+		$request_method = isset( $_SERVER['REQUEST_METHOD'] ) && is_scalar( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( (string) $_SERVER['REQUEST_METHOD'] ) : 'GET';
+		if ( 'yes' === $settings['prefill_customer_details'] || 'GET' !== $request_method || ! $this->is_classic_checkout_request() ) {
+			return $value;
+		}
+
+		$private_fields = array(
+			'billing_first_name', 'billing_last_name', 'billing_company', 'billing_address_1', 'billing_address_2',
+			'billing_city', 'billing_postcode', 'billing_phone', 'billing_email',
+			'shipping_first_name', 'shipping_last_name', 'shipping_company', 'shipping_address_1', 'shipping_address_2',
+			'shipping_city', 'shipping_postcode',
+		);
+		return in_array( $input, $private_fields, true ) ? '' : $value;
 	}
 
 	/**

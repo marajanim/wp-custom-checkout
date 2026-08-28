@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 final class WCCP_Settings {
 	/** @var string[] */
 	private static $boolean_keys = array(
-		'enable_layout', 'enable_agreement', 'open_links_new_tab', 'agreement_checked',
+		'enable_layout', 'prefill_customer_details', 'enable_agreement', 'open_links_new_tab', 'agreement_checked',
 		'show_progress', 'show_coupon', 'show_billing_heading', 'show_shipping',
 		'show_order_notes', 'show_product_images', 'show_product_meta',
 		'sticky_order_summary', 'show_payment_heading', 'delete_on_uninstall',

@@ -54,6 +54,7 @@ final class WCCP_Defaults {
 		return array(
 			'enable_layout'          => 'yes',
 			'font_size'              => '15',
+			'prefill_customer_details'=> 'no',
 			'enable_agreement'       => 'yes',
 			'agreement_intro'        => 'I have read and agree to the',
 			'open_links_new_tab'     => 'yes',

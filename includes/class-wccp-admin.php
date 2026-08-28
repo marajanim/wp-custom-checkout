@@ -185,6 +185,7 @@ final class WCCP_Admin {
 			<h1><?php esc_html_e( 'WCCP Custom Checkout', 'wccp-custom-checkout' ); ?></h1>
 			<p class="description"><?php esc_html_e( 'Configure on staging and complete a test order with every active shipping and payment method before production use.', 'wccp-custom-checkout' ); ?></p>
 			<div class="notice notice-warning inline"><p><?php esc_html_e( 'Version 1 customizes the classic checkout shortcode. WooCommerce Checkout Block pages safely retain their native layout.', 'wccp-custom-checkout' ); ?></p></div>
+			<div class="notice notice-error inline"><p><strong><?php esc_html_e( 'Checkout privacy:', 'wccp-custom-checkout' ); ?></strong> <?php esc_html_e( 'Exclude Cart, Checkout, My Account, and wc-ajax URLs from every WordPress, hosting, reverse-proxy, and CDN full-page cache. Purge all existing cache after changing this plugin.', 'wccp-custom-checkout' ); ?> <a href="https://developer.woocommerce.com/docs/best-practices/performance/configuring-caching-plugins" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'WooCommerce cache guidance', 'wccp-custom-checkout' ); ?></a></p></div>
 			<?php $this->render_status_notice(); ?>
 			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Custom checkout settings', 'wccp-custom-checkout' ); ?>">
 				<a class="nav-tab <?php echo 'general' === $tab ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( 'tab', 'general', $base ) ); ?>"><?php esc_html_e( 'Layout & Policies', 'wccp-custom-checkout' ); ?></a>
@@ -310,6 +311,7 @@ final class WCCP_Admin {
 				<?php
 				$this->checkbox_row( $s, 'enable_layout', __( 'Custom checkout layout', 'wccp-custom-checkout' ) );
 				$this->number_row( $s, 'font_size', __( 'Checkout font size', 'wccp-custom-checkout' ), 13, 22, __( 'Controls checkout labels, inputs, delivery choices, order details, totals, and headings. Default: 15px.', 'wccp-custom-checkout' ) );
+				$this->checkbox_row( $s, 'prefill_customer_details', __( 'Prefill saved customer details', 'wccp-custom-checkout' ), __( 'Disabled by default for privacy. Enable only when each shopper uses a private account and should see their saved billing and shipping details.', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_progress', __( 'Checkout progress banner', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_coupon', __( 'Coupon prompt and form', 'wccp-custom-checkout' ) );
 				$this->checkbox_row( $s, 'show_billing_heading', __( 'Billing Details heading', 'wccp-custom-checkout' ) );

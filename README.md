@@ -4,7 +4,7 @@ A secure, dynamic classic checkout builder for WooCommerce and the WoodMart them
 
 ## Current development release
 
-Version `0.6.3` includes:
+Version `0.7.0` includes:
 
 - Responsive custom classic-checkout layout.
 - Dynamic WooCommerce field manager.
@@ -16,6 +16,7 @@ Version `0.6.3` includes:
 - Editable delivery-area names and charges that replace WooCommerce's default shipping selector.
 - WoodMart-compatible order rows, a single payment card, and automatic removal of empty AJAX layout artifacts.
 - An admin-controlled checkout font size from 13px to 22px.
+- Private/no-store checkout headers and a privacy-first saved-detail prefill switch.
 - Capability, nonce, validation, sanitization, and escaping protections.
 - Safe fallback when the plugin is disabled.
 
@@ -37,6 +38,7 @@ Version `0.6.3` includes:
 6. Under **Checkout Fields > Billing**, configure `billing_delivery_area` like the other fields. It is enabled and required by default.
 7. Edit the three area names and charges in **Delivery areas and charges** on the same screen.
 8. Confirm that choosing an area refreshes the order total and adds the correct delivery charge, then test every enabled payment gateway.
+9. Exclude Cart, Checkout, My Account, and `wc-ajax` requests from every page cache/CDN, then purge all existing cached HTML.
 
 Do not remove the existing child-theme checkout snippet until the plugin passes staging tests. See [readme.txt](readme.txt) and [SECURITY.md](SECURITY.md) for additional instructions.
 
