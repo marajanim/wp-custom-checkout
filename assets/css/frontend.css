@@ -129,7 +129,12 @@
 	display: none !important;
 }
 .wccp-enabled .wccp-checkout-main > div[hidden],
-.wccp-enabled .wccp-checkout-sidebar > div[hidden] { display: none !important; }
+.wccp-enabled .wccp-checkout-sidebar > div[hidden],
+.wccp-enabled .wccp-checkout-sidebar[hidden],
+.wccp-enabled form.woocommerce-checkout .elementor-element.e-con[hidden],
+.wccp-enabled form.woocommerce-checkout .elementor-widget[hidden],
+.wccp-enabled form.woocommerce-checkout .elementor-element.e-con:empty,
+.wccp-enabled form.woocommerce-checkout .elementor-widget:empty { display: none !important; }
 
 .wccp-product-name { display: flex; align-items: flex-start; gap: 10px; }
 .wccp-product-image { width: 64px; height: 64px; flex: 0 0 64px; border-radius: 4px; object-fit: cover; }

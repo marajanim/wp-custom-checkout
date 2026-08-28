@@ -7,10 +7,22 @@
 		return column;
 	}
 
-	function ensurePaymentHeading(payment, config) {
+	function ensurePaymentHeading(payment, config, form) {
+		var paymentTitle = config.paymentHeading || 'Payment Information';
 		var headings = document.querySelectorAll('.wccp-payment-heading');
 		headings.forEach(function (heading) {
 			if (!payment.contains(heading)) {
+				heading.remove();
+			}
+		});
+		form.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title').forEach(function (heading) {
+			if (payment.contains(heading) || heading.textContent.trim() !== paymentTitle) {
+				return;
+			}
+			var widget = heading.closest('.elementor-widget');
+			if (widget && !widget.contains(payment)) {
+				widget.remove();
+			} else {
 				heading.remove();
 			}
 		});
@@ -26,7 +38,7 @@
 			heading.className = 'wccp-payment-heading';
 			payment.insertBefore(heading, payment.firstChild);
 		}
-		heading.textContent = config.paymentHeading || 'Payment Information';
+		heading.textContent = paymentTitle;
 	}
 
 	function hideEmptyArtifacts(grid) {
@@ -37,6 +49,25 @@
 				element.hidden = true;
 			}
 		});
+	}
+
+	function hideEmptyCheckoutContainers(form, grid) {
+		var containers = Array.prototype.slice.call(form.querySelectorAll('.elementor-element.e-con, .elementor-widget'));
+		containers.reverse().forEach(function (element) {
+			var hasText = element.textContent.trim() !== '';
+			var hasContent = element.querySelector('table, img, button, input, select, textarea, iframe, video, .woocommerce-notices-wrapper:not(:empty)');
+			if (!hasText && !hasContent) {
+				element.hidden = true;
+			}
+		});
+
+		var sidebar = grid.querySelector('.wccp-checkout-sidebar');
+		if (!sidebar) {
+			return;
+		}
+		var hasSidebarContent = sidebar.textContent.trim() !== '' || sidebar.querySelector('table, img, button, input, select, textarea, iframe');
+		sidebar.hidden = !hasSidebarContent;
+		grid.classList.toggle('wccp-no-sidebar', !hasSidebarContent);
 	}
 
 	function removeOrphanContainers(form, grid) {
@@ -77,7 +108,7 @@
 			quantityControl.remove();
 		});
 		if (payment) {
-			ensurePaymentHeading(payment, config);
+			ensurePaymentHeading(payment, config, form);
 		}
 		if (customer && customer.parentNode !== main) {
 			main.appendChild(customer);
@@ -93,6 +124,7 @@
 		}
 		removeOrphanContainers(form, grid);
 		hideEmptyArtifacts(grid);
+		hideEmptyCheckoutContainers(form, grid);
 
 		var billingHeading = form.querySelector('.woocommerce-billing-fields > h3');
 		if (billingHeading) {
