@@ -105,6 +105,11 @@ final class WCCP_Admin {
 			}
 		}
 		update_option( WCCP_Defaults::FIELDS_OPTION, $clean, false );
+		if ( in_array( WCCP_Delivery_Area::FIELD_KEY, $resets, true ) ) {
+			update_option( WCCP_Defaults::DELIVERY_OPTION, WCCP_Defaults::delivery_areas(), false );
+		} elseif ( isset( $_POST['delivery_areas'] ) && is_array( $_POST['delivery_areas'] ) ) {
+			update_option( WCCP_Defaults::DELIVERY_OPTION, WCCP_Settings::sanitize_delivery_areas( $_POST['delivery_areas'] ), false );
+		}
 		$this->redirect( 'fields', 'saved' );
 	}
 
@@ -112,6 +117,7 @@ final class WCCP_Admin {
 	public function reset_fields() {
 		$this->authorize( 'wccp_reset_fields' );
 		update_option( WCCP_Defaults::FIELDS_OPTION, array(), false );
+		update_option( WCCP_Defaults::DELIVERY_OPTION, WCCP_Defaults::delivery_areas(), false );
 		$this->redirect( 'fields', 'reset' );
 	}
 
@@ -354,6 +360,7 @@ final class WCCP_Admin {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="wccp_save_fields">
 				<?php wp_nonce_field( 'wccp_save_fields' ); ?>
+				<?php $this->render_delivery_areas_editor(); ?>
 				<?php foreach ( $groups as $group_key => $fields ) : ?>
 					<?php if ( ! is_array( $fields ) || empty( $fields ) ) { continue; } ?>
 					<h2><?php echo esc_html( ucfirst( sanitize_key( $group_key ) ) ); ?></h2>
@@ -395,6 +402,31 @@ final class WCCP_Admin {
 			<?php wp_nonce_field( 'wccp_reset_fields' ); ?>
 			<?php submit_button( __( 'Reset all checkout fields', 'wccp-custom-checkout' ), 'secondary', 'submit', false ); ?>
 		</form>
+		<?php
+	}
+
+	/** Render editable labels and prices for the fixed, server-validated areas. */
+	private function render_delivery_areas_editor() {
+		$areas = WCCP_Defaults::get_delivery_areas();
+		?>
+		<section class="wccp-delivery-editor" aria-labelledby="wccp-delivery-editor-title">
+			<h2 id="wccp-delivery-editor-title"><?php esc_html_e( 'Delivery areas and charges', 'wccp-custom-checkout' ); ?></h2>
+			<p class="description"><?php esc_html_e( 'Edit the customer-facing area names and charges. These secure server-side charges replace WooCommerce shipping while billing_delivery_area is enabled.', 'wccp-custom-checkout' ); ?></p>
+			<div class="wccp-delivery-editor-grid">
+			<?php foreach ( $areas as $key => $area ) : ?>
+				<div class="wccp-delivery-editor-item">
+					<div class="wccp-delivery-editor-field">
+						<label for="wccp-delivery-label-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Area name', 'wccp-custom-checkout' ); ?></label>
+						<input id="wccp-delivery-label-<?php echo esc_attr( $key ); ?>" type="text" name="delivery_areas[<?php echo esc_attr( $key ); ?>][label]" value="<?php echo esc_attr( $area['label'] ); ?>" maxlength="120" required>
+					</div>
+					<div class="wccp-delivery-editor-field">
+						<label for="wccp-delivery-cost-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Charge', 'wccp-custom-checkout' ); ?></label>
+						<input id="wccp-delivery-cost-<?php echo esc_attr( $key ); ?>" class="small-text" type="number" min="0" max="1000000" step="0.01" name="delivery_areas[<?php echo esc_attr( $key ); ?>][cost]" value="<?php echo esc_attr( $area['cost'] ); ?>" required>
+					</div>
+				</div>
+			<?php endforeach; ?>
+			</div>
+		</section>
 		<?php
 	}
 

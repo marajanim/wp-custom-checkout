@@ -11,7 +11,39 @@ final class WCCP_Defaults {
 	const SETTINGS_OPTION = 'wccp_settings';
 	const FIELDS_OPTION   = 'wccp_field_settings';
 	const CUSTOM_OPTION   = 'wccp_custom_fields';
+	const DELIVERY_OPTION = 'wccp_delivery_areas';
 	const DELETE_OPTION   = 'wccp_delete_data_on_uninstall';
+
+	/** Return the three editable delivery-area defaults. */
+	public static function delivery_areas() {
+		return array(
+			'dhaka_inside' => array(
+				'label' => 'ঢাকার ভিতরে',
+				'cost'  => '60',
+			),
+			'dhaka_nearby' => array(
+				'label' => 'ঢাকার পার্শ্ববর্তী অঞ্চল (সাভার, গাজীপুর, নারায়ণগঞ্জ, কেরানীগঞ্জ)',
+				'cost'  => '90',
+			),
+			'outside_dhaka' => array(
+				'label' => 'ঢাকার বাইরে',
+				'cost'  => '120',
+			),
+		);
+	}
+
+	/** Return saved delivery areas merged only against known area keys. */
+	public static function get_delivery_areas() {
+		$saved  = get_option( self::DELIVERY_OPTION, array() );
+		$saved  = is_array( $saved ) ? $saved : array();
+		$areas  = array();
+		foreach ( self::delivery_areas() as $key => $default ) {
+			$areas[ $key ] = isset( $saved[ $key ] ) && is_array( $saved[ $key ] )
+				? wp_parse_args( $saved[ $key ], $default )
+				: $default;
+		}
+		return $areas;
+	}
 
 	/**
 	 * Return safe plugin defaults.

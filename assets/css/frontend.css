@@ -151,9 +151,33 @@
 .wccp-enabled form.checkout_coupon { margin-bottom: 12px; }
 .wccp-custom-heading { clear: both; padding-top: 8px; }
 .wccp-custom-content { clear: both; margin: 8px 0 16px; }
-.wccp-delivery-area-field .woocommerce-input-wrapper { display: grid; gap: 8px; margin-top: 8px; }
-.wccp-delivery-area-field label.radio { display: flex; align-items: flex-start; gap: 8px; margin: 0; font-weight: 400; }
-.wccp-delivery-area-field input[type="radio"] { flex: 0 0 auto; margin-top: .2em; }
+.wccp-enabled form.checkout .wccp-delivery-area-field .woocommerce-input-wrapper {
+	display: grid;
+	grid-template-columns: 18px minmax(0, 1fr);
+	gap: 9px 10px;
+	align-items: start;
+	margin-top: 7px;
+	padding: 12px;
+	border: 1px solid var(--wccp-border, #e7e7e7);
+	border-radius: 4px;
+	background: #fafafa;
+}
+.wccp-enabled form.checkout .wccp-delivery-area-field input.input-radio {
+	position: static;
+	grid-column: 1;
+	width: 16px;
+	height: 16px;
+	min-height: 0;
+	margin: 2px 0 0;
+}
+.wccp-enabled form.checkout .wccp-delivery-area-field label.radio {
+	display: block;
+	grid-column: 2;
+	margin: 0;
+	font-weight: 400;
+	line-height: 1.45;
+}
+.wccp-enabled form.checkout .wccp-delivery-area-field label.radio .required { display: none; }
 
 @media (min-width: 1024px) {
 	.wccp-sticky-summary .wccp-checkout-sidebar { position: sticky; top: 24px; }

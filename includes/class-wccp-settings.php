@@ -102,6 +102,27 @@ final class WCCP_Settings {
 		return $clean;
 	}
 
+	/** Sanitize the fixed allowlist of editable delivery-area names and costs. */
+	public static function sanitize_delivery_areas( $raw ) {
+		$raw      = is_array( $raw ) ? wp_unslash( $raw ) : array();
+		$defaults = WCCP_Defaults::delivery_areas();
+		$clean    = array();
+
+		foreach ( $defaults as $key => $default ) {
+			$config = isset( $raw[ $key ] ) && is_array( $raw[ $key ] ) ? $raw[ $key ] : array();
+			$label  = isset( $config['label'] ) && is_scalar( $config['label'] ) ? sanitize_text_field( (string) $config['label'] ) : '';
+			$cost   = isset( $config['cost'] ) && is_scalar( $config['cost'] ) ? wc_format_decimal( (string) $config['cost'] ) : '';
+			$cost   = is_numeric( $cost ) && (float) $cost >= 0 && (float) $cost <= 1000000 ? $cost : $default['cost'];
+
+			$clean[ $key ] = array(
+				'label' => '' !== $label ? self::limit( $label, 120 ) : $default['label'],
+				'cost'  => $cost,
+			);
+		}
+
+		return $clean;
+	}
+
 	/**
 	 * Limit a string in a multibyte-safe way when available.
 	 *

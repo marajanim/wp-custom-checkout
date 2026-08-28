@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, woodmart
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.3.0
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ A secure, dynamic classic checkout builder for WooCommerce and WoodMart.
 
 WCCP Custom Checkout provides a responsive two-column classic checkout, configurable policy agreement, native checkout field manager, and HPOS-compatible custom order fields.
 
-It also provides a Billing delivery-area radio field with three Bengali choices: inside Dhaka, nearby Dhaka regions, and outside Dhaka. The selected server-validated charge is added to checkout and the order at 60, 90, or 120 in the WooCommerce store currency.
+It also provides a Billing delivery-area radio field with three editable Bengali choices. The selected server-validated charge replaces WooCommerce's default shipping selector and is added to checkout and the order.
 
 Version 0.3 targets the classic WooCommerce checkout shortcode. Checkout Block pages deliberately retain WooCommerce's native layout and are declared incompatible with this plugin's custom field behavior.
 
@@ -29,7 +29,7 @@ No payment credentials are collected or stored by this plugin. WooCommerce and i
 5. Open WooCommerce > Custom Checkout.
 6. Configure layout, policy links, native fields, and any custom fields.
 7. Under Checkout Fields > Billing, configure billing_delivery_area. It is enabled and required by default.
-8. Set an existing flat-rate shipping charge to zero or disable it if it would duplicate the delivery-area fee.
+8. Edit the three delivery-area names and charges on the same screen. While this field is enabled, it replaces WooCommerce shipping selection.
 9. Select every delivery area and confirm its total before completing test orders with every active gateway.
 10. Only after successful tests, remove the old SinoGems checkout privacy/terms filters and sinogems_custom_terms_text function from the child theme. Keep the unrelated WoodMart child stylesheet enqueue function.
 11. Clear WordPress, WoodMart, page, object, and CDN caches.
@@ -71,6 +71,12 @@ Settings mutations require manage_woocommerce, POST requests, and purpose-specif
 Report vulnerabilities privately to the site/plugin owner. Do not publish exploitable details before a fix is available. See SECURITY.md in the plugin package.
 
 == Changelog ==
+
+= 0.4.0 =
+
+* Added secure editing for all three delivery-area names and charges.
+* Replaced WooCommerce's default shipping selector while the delivery field is enabled.
+* Added a compact, aligned checkout radio design.
 
 = 0.3.0 =
 

@@ -19,6 +19,8 @@ final class WCCP_Delivery_Area {
 		add_action( 'woocommerce_after_checkout_validation', array( $this, 'validate_selection' ), 10, 2 );
 		add_action( 'woocommerce_checkout_create_order', array( $this, 'save_order_meta' ), 10, 2 );
 		add_filter( 'woocommerce_checkout_get_value', array( $this, 'restore_value' ), 10, 2 );
+		add_filter( 'woocommerce_cart_needs_shipping', array( $this, 'disable_default_shipping' ), 999 );
+		add_filter( 'woocommerce_cart_needs_shipping_address', array( $this, 'disable_default_shipping' ), 999 );
 		add_action( 'woocommerce_admin_order_data_after_billing_address', array( $this, 'display_admin_value' ), 5 );
 	}
 
@@ -119,6 +121,11 @@ final class WCCP_Delivery_Area {
 		return isset( $this->rates()[ $stored ] ) ? $stored : $value;
 	}
 
+	/** Replace WooCommerce shipping selection while this delivery field is enabled. */
+	public function disable_default_shipping( $needs_shipping ) {
+		return $this->is_enabled() ? false : $needs_shipping;
+	}
+
 	/** Show the area in the order screen; the charged amount remains in order totals. */
 	public function display_admin_value( $order ) {
 		if ( ! is_object( $order ) || ! is_callable( array( $order, 'get_meta' ) ) || ! current_user_can( 'edit_shop_orders' ) ) {
@@ -157,22 +164,20 @@ final class WCCP_Delivery_Area {
 
 	/** Central server-side allowlist of valid areas and charge amounts. */
 	private function rates() {
-		return array(
-			'dhaka_inside' => array(
-				'area'   => __( 'ঢাকার ভিতরে', 'wccp-custom-checkout' ),
-				'option' => __( 'ঢাকার ভিতরে — ৬০ টাকা', 'wccp-custom-checkout' ),
-				'cost'   => 60,
-			),
-			'dhaka_nearby' => array(
-				'area'   => __( 'ঢাকার পার্শ্ববর্তী অঞ্চল', 'wccp-custom-checkout' ),
-				'option' => __( 'ঢাকার পার্শ্ববর্তী অঞ্চল (সাভার, গাজীপুর, নারায়ণগঞ্জ, কেরানীগঞ্জ) — ৯০ টাকা', 'wccp-custom-checkout' ),
-				'cost'   => 90,
-			),
-			'outside_dhaka' => array(
-				'area'   => __( 'ঢাকার বাইরে', 'wccp-custom-checkout' ),
-				'option' => __( 'ঢাকার বাইরে — ১২০ টাকা', 'wccp-custom-checkout' ),
-				'cost'   => 120,
-			),
-		);
+		$rates    = array();
+		$defaults = WCCP_Defaults::delivery_areas();
+		foreach ( WCCP_Defaults::get_delivery_areas() as $key => $area ) {
+			$label = isset( $area['label'] ) && is_scalar( $area['label'] ) ? sanitize_text_field( (string) $area['label'] ) : '';
+			$cost  = isset( $area['cost'] ) && is_scalar( $area['cost'] ) ? wc_format_decimal( (string) $area['cost'] ) : '';
+			$label = '' !== $label ? WCCP_Settings::limit( $label, 120 ) : $defaults[ $key ]['label'];
+			$cost  = is_numeric( $cost ) && (float) $cost >= 0 && (float) $cost <= 1000000 ? $cost : $defaults[ $key ]['cost'];
+			$display_cost = function_exists( 'wc_format_localized_price' ) ? wc_format_localized_price( $cost ) : $cost;
+			$rates[ $key ] = array(
+				'area'   => $label,
+				'option' => sprintf( __( '%1$s — %2$s টাকা', 'wccp-custom-checkout' ), $label, $display_cost ),
+				'cost'   => $cost,
+			);
+		}
+		return $rates;
 	}
 }

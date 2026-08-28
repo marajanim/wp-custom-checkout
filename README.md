@@ -4,7 +4,7 @@ A secure, dynamic classic checkout builder for WooCommerce and the WoodMart them
 
 ## Current development release
 
-Version `0.3.0` includes:
+Version `0.4.0` includes:
 
 - Responsive custom classic-checkout layout.
 - Dynamic WooCommerce field manager.
@@ -13,6 +13,7 @@ Version `0.3.0` includes:
 - HPOS-compatible custom checkout fields.
 - Configurable terms, privacy, refund, and delivery-policy agreement.
 - A required Bengali delivery-area radio field with server-calculated charges of 60, 90, or 120.
+- Editable delivery-area names and charges that replace WooCommerce's default shipping selector.
 - Capability, nonce, validation, sanitization, and escaping protections.
 - Safe fallback when the plugin is disabled.
 
@@ -32,7 +33,7 @@ Version `0.3.0` includes:
 4. Open **WooCommerce > Custom Checkout**.
 5. Configure the layout, policy links, and checkout fields.
 6. Under **Checkout Fields > Billing**, configure `billing_delivery_area` like the other fields. It is enabled and required by default.
-7. Set any existing WooCommerce flat-rate shipping charge to zero or disable it if it would duplicate this delivery fee.
+7. Edit the three area names and charges in **Delivery areas and charges** on the same screen.
 8. Confirm that choosing an area refreshes the order total and adds the correct delivery charge, then test every enabled payment gateway.
 
 Do not remove the existing child-theme checkout snippet until the plugin passes staging tests. See [readme.txt](readme.txt) and [SECURITY.md](SECURITY.md) for additional instructions.

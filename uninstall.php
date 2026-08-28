@@ -14,6 +14,7 @@ if ( 'yes' !== get_option( 'wccp_delete_data_on_uninstall', 'no' ) ) {
 delete_option( 'wccp_settings' );
 delete_option( 'wccp_field_settings' );
 delete_option( 'wccp_custom_fields' );
+delete_option( 'wccp_delivery_areas' );
 delete_option( 'wccp_delete_data_on_uninstall' );
 
 // Historical order and customer metadata is deliberately retained.

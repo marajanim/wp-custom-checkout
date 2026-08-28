@@ -61,6 +61,7 @@ final class WCCP_Plugin {
 		add_option( WCCP_Defaults::SETTINGS_OPTION, WCCP_Defaults::settings(), '', 'no' );
 		add_option( WCCP_Defaults::FIELDS_OPTION, array(), '', 'no' );
 		add_option( WCCP_Defaults::CUSTOM_OPTION, array(), '', 'no' );
+		add_option( WCCP_Defaults::DELIVERY_OPTION, WCCP_Defaults::delivery_areas(), '', 'no' );
 		add_option( WCCP_Defaults::DELETE_OPTION, 'no', '', 'no' );
 	}
 
