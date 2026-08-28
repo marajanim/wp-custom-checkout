@@ -108,7 +108,13 @@ final class WCCP_Fields {
 		$field['label']       = isset( $config['label'] ) && '' !== $config['label'] ? $config['label'] : ( isset( $field['label'] ) ? $field['label'] : '' );
 		$field['placeholder'] = isset( $config['placeholder'] ) ? $config['placeholder'] : '';
 		$field['priority']    = isset( $config['priority'] ) ? absint( $config['priority'] ) : 0;
-		$field['class']       = $this->width_classes( isset( $config['width'] ) ? $config['width'] : 'full' );
+		$existing_classes     = isset( $field['class'] ) && is_array( $field['class'] ) ? $field['class'] : array();
+		$semantic_classes     = array_diff( $existing_classes, array( 'form-row-first', 'form-row-last', 'form-row-wide' ) );
+		$field['class']       = array_values(
+			array_unique(
+				array_merge( $this->width_classes( isset( $config['width'] ) ? $config['width'] : 'full' ), $semantic_classes )
+			)
+		);
 		return $field;
 	}
 
