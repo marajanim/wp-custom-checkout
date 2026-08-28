@@ -4,7 +4,7 @@ A secure, dynamic classic checkout builder for WooCommerce and the WoodMart them
 
 ## Current development release
 
-Version `0.1.0` includes:
+Version `0.2.0` includes:
 
 - Responsive custom classic-checkout layout.
 - Dynamic WooCommerce field manager.
@@ -12,6 +12,7 @@ Version `0.1.0` includes:
 - Labels, placeholders, ordering, widths, and checkout sections.
 - HPOS-compatible custom checkout fields.
 - Configurable terms, privacy, refund, and delivery-policy agreement.
+- Three selectable Bengali delivery-area rates for Dhaka and surrounding regions.
 - Capability, nonce, validation, sanitization, and escaping protections.
 - Safe fallback when the plugin is disabled.
 
@@ -30,7 +31,9 @@ Version `0.1.0` includes:
 3. Activate WooCommerce and then activate WCCP Custom Checkout.
 4. Open **WooCommerce > Custom Checkout**.
 5. Configure the layout, policy links, and checkout fields.
-6. Test every enabled payment gateway and shipping method before production use.
+6. Open **WooCommerce > Settings > Shipping > Shipping zones**, edit the Bangladesh/Dhaka zone, and add **WCCP Delivery Areas**.
+7. Keep the default rates at 60, 90, and 120 or edit them in the shipping-method settings. Disable any old flat rate that would duplicate these choices.
+8. Test every enabled payment gateway and shipping method before production use.
 
 Do not remove the existing child-theme checkout snippet until the plugin passes staging tests. See [readme.txt](readme.txt) and [SECURITY.md](SECURITY.md) for additional instructions.
 

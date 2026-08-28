@@ -41,6 +41,8 @@ final class WCCP_Plugin {
 
 		$this->fields = new WCCP_Fields();
 		$this->fields->hooks();
+		add_action( 'woocommerce_shipping_init', array( $this, 'load_shipping_method' ) );
+		add_filter( 'woocommerce_shipping_methods', array( $this, 'register_shipping_method' ) );
 
 		$checkout = new WCCP_Checkout();
 		$checkout->hooks();
@@ -49,6 +51,19 @@ final class WCCP_Plugin {
 			$admin = new WCCP_Admin( $this->fields );
 			$admin->hooks();
 		}
+	}
+
+	/** Load the shipping subclass only after WooCommerce initializes shipping. */
+	public function load_shipping_method() {
+		if ( ! class_exists( 'WCCP_Delivery_Areas_Shipping_Method' ) ) {
+			require_once WCCP_PATH . 'includes/class-wccp-delivery-areas-shipping.php';
+		}
+	}
+
+	/** Register the delivery-area method with WooCommerce shipping zones. */
+	public function register_shipping_method( $methods ) {
+		$methods['wccp_delivery_areas'] = 'WCCP_Delivery_Areas_Shipping_Method';
+		return $methods;
 	}
 
 	/**
