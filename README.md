@@ -4,7 +4,7 @@ A secure, dynamic classic checkout builder for WooCommerce and the WoodMart them
 
 ## Current development release
 
-Version `0.4.0` includes:
+Version `0.5.0` includes:
 
 - Responsive custom classic-checkout layout.
 - Dynamic WooCommerce field manager.
@@ -14,6 +14,7 @@ Version `0.4.0` includes:
 - Configurable terms, privacy, refund, and delivery-policy agreement.
 - A required Bengali delivery-area radio field with server-calculated charges of 60, 90, or 120.
 - Editable delivery-area names and charges that replace WooCommerce's default shipping selector.
+- WoodMart-compatible order rows, a single payment card, and automatic removal of empty AJAX layout artifacts.
 - Capability, nonce, validation, sanitization, and escaping protections.
 - Safe fallback when the plugin is disabled.
 

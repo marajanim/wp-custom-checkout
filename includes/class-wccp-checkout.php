@@ -22,7 +22,6 @@ final class WCCP_Checkout {
 		add_filter( 'woocommerce_checkout_show_terms', array( $this, 'show_terms' ) );
 		add_filter( 'woocommerce_cart_item_name', array( $this, 'cart_item_name' ), 20, 3 );
 		add_filter( 'woocommerce_ship_to_different_address_checked', array( $this, 'shipping_checked' ) );
-		add_action( 'woocommerce_review_order_before_payment', array( $this, 'payment_heading' ), 1 );
 	}
 
 	/**
@@ -67,6 +66,8 @@ final class WCCP_Checkout {
 				'showBillingHeading'=> 'yes' === $settings['show_billing_heading'],
 				'showShipping'      => 'yes' === $settings['show_shipping'],
 				'stickySummary'     => 'yes' === $settings['sticky_order_summary'],
+				'showPaymentHeading'=> 'yes' === $settings['show_payment_heading'],
+				'paymentHeading'    => __( 'Payment Information', 'wccp-custom-checkout' ),
 			)
 		);
 	}
@@ -175,6 +176,11 @@ final class WCCP_Checkout {
 		if ( ! $this->is_classic_checkout_request() || false !== strpos( $name, 'wccp-product-name' ) ) {
 			return $name;
 		}
+		$theme = function_exists( 'wp_get_theme' ) ? wp_get_theme() : null;
+		$template = $theme && is_callable( array( $theme, 'get_template' ) ) ? strtolower( (string) $theme->get_template() ) : '';
+		if ( false !== strpos( $template, 'woodmart' ) ) {
+			return $name;
+		}
 		$settings = WCCP_Defaults::get_settings();
 		$product  = isset( $cart_item['data'] ) && $cart_item['data'] instanceof WC_Product ? $cart_item['data'] : null;
 		if ( ! $product ) {
@@ -198,16 +204,6 @@ final class WCCP_Checkout {
 	public function shipping_checked( $checked ) {
 		$settings = WCCP_Defaults::get_settings();
 		return $this->is_classic_checkout_request() && 'yes' !== $settings['show_shipping'] ? false : $checked;
-	}
-
-	/**
-	 * Add a payment card heading through a standard WooCommerce hook.
-	 */
-	public function payment_heading() {
-		$settings = WCCP_Defaults::get_settings();
-		if ( $this->is_custom_checkout() && 'yes' === $settings['show_payment_heading'] ) {
-			echo '<h3 class="wccp-payment-heading">' . esc_html__( 'Payment Information', 'wccp-custom-checkout' ) . '</h3>';
-		}
 	}
 
 	/**

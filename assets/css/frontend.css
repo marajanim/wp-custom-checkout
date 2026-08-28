@@ -85,6 +85,8 @@
 	line-height: 1.3;
 }
 
+.wccp-enabled #payment > .wccp-payment-heading { margin-bottom: 14px; }
+
 .wccp-enabled #order_review_heading,
 .wccp-enabled #order_review {
 	float: none;
@@ -95,6 +97,7 @@
 	margin: 0;
 	border: 0;
 	background: transparent;
+	table-layout: fixed;
 }
 
 .wccp-enabled #order_review .shop_table th,
@@ -102,6 +105,14 @@
 	padding: 12px 6px;
 	border-color: var(--wccp-border, #e7e7e7);
 }
+
+.wccp-enabled #order_review .shop_table .product-name { min-width: 0; overflow-wrap: anywhere; vertical-align: top; }
+.wccp-enabled #order_review .shop_table .product-total { width: 84px; white-space: nowrap; vertical-align: top; }
+.wccp-enabled #order_review .shop_table .product-name img { max-width: 56px; height: auto; }
+.wccp-enabled #order_review .quantity { display: inline-flex; align-items: center; white-space: nowrap; }
+.wccp-enabled #order_review .quantity input.qty { width: 36px; min-width: 36px; }
+.wccp-enabled .wccp-checkout-main > div[hidden],
+.wccp-enabled .wccp-checkout-sidebar > div[hidden] { display: none !important; }
 
 .wccp-product-name { display: flex; align-items: flex-start; gap: 10px; }
 .wccp-product-image { width: 64px; height: 64px; flex: 0 0 64px; border-radius: 4px; object-fit: cover; }
