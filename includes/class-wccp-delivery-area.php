@@ -18,9 +18,11 @@ final class WCCP_Delivery_Area {
 		add_action( 'woocommerce_cart_calculate_fees', array( $this, 'add_fee' ), 20 );
 		add_action( 'woocommerce_after_checkout_validation', array( $this, 'validate_selection' ), 10, 2 );
 		add_action( 'woocommerce_checkout_create_order', array( $this, 'save_order_meta' ), 10, 2 );
+		add_action( 'woocommerce_checkout_create_order', array( $this, 'copy_billing_to_shipping' ), 20, 2 );
 		add_filter( 'woocommerce_checkout_get_value', array( $this, 'restore_value' ), 10, 2 );
 		add_filter( 'woocommerce_cart_needs_shipping', array( $this, 'disable_default_shipping' ), 999 );
 		add_filter( 'woocommerce_cart_needs_shipping_address', array( $this, 'disable_default_shipping' ), 999 );
+		add_filter( 'woocommerce_order_get_formatted_shipping_address', array( $this, 'admin_shipping_address_fallback' ), 10, 3 );
 		add_action( 'woocommerce_admin_order_data_after_billing_address', array( $this, 'display_admin_value' ), 5 );
 	}
 
@@ -110,6 +112,67 @@ final class WCCP_Delivery_Area {
 			$order->update_meta_data( '_wccp_delivery_area', $value );
 			$order->update_meta_data( '_wccp_delivery_area_label', $rates[ $value ]['area'] );
 		}
+	}
+
+	/**
+	 * Store billing as the shipping address when the custom delivery fee replaces shipping.
+	 *
+	 * WooCommerce omits its shipping fields after needs_shipping_address is disabled.
+	 * Persisting the submitted billing address on the order keeps the HPOS order-list
+	 * "Ship to" column and shipping labels useful without changing a genuinely
+	 * separate shipping address.
+	 */
+	public function copy_billing_to_shipping( $order, $data ) {
+		if ( ! $this->is_enabled() || ! $order instanceof WC_Order || ! empty( $data['ship_to_different_address'] ) ) {
+			return;
+		}
+
+		$shipping = $order->get_address( 'shipping' );
+		if ( ! empty( $shipping['address_1'] ) || ! empty( $shipping['address_2'] ) ) {
+			return;
+		}
+
+		$billing = $order->get_address( 'billing' );
+		foreach ( array( 'first_name', 'last_name', 'company', 'address_1', 'address_2', 'city', 'state', 'postcode', 'country', 'phone' ) as $field ) {
+			if ( ! isset( $billing[ $field ] ) || '' === trim( (string) $billing[ $field ] ) ) {
+				continue;
+			}
+			$setter = 'set_shipping_' . $field;
+			if ( is_callable( array( $order, $setter ) ) ) {
+				$order->{$setter}( $billing[ $field ] );
+			}
+		}
+	}
+
+	/**
+	 * Show billing details for historical delivery-area orders with no shipping data.
+	 *
+	 * This is deliberately limited to WooCommerce order administration. It repairs
+	 * the existing order-list display without rewriting historical order records.
+	 */
+	public function admin_shipping_address_fallback( $formatted_address, $raw_address, $order ) {
+		if ( ! is_admin() || ! $order instanceof WC_Order || ! current_user_can( 'edit_shop_orders' ) ) {
+			return $formatted_address;
+		}
+
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$order_screen_id = function_exists( 'wc_get_page_screen_id' ) ? wc_get_page_screen_id( 'shop-order' ) : '';
+		if ( ! $screen || ! in_array( $screen->id, array_filter( array( 'edit-shop_order', $order_screen_id ) ), true ) ) {
+			return $formatted_address;
+		}
+
+		$address_fields = array( 'address_1', 'address_2' );
+		foreach ( $address_fields as $field ) {
+			if ( isset( $raw_address[ $field ] ) && '' !== trim( (string) $raw_address[ $field ] ) ) {
+				return $formatted_address;
+			}
+		}
+
+		if ( '' === (string) $order->get_meta( '_wccp_delivery_area', true ) ) {
+			return $formatted_address;
+		}
+
+		return $order->get_formatted_billing_address( $formatted_address );
 	}
 
 	/** Keep the chosen radio selected after checkout AJAX refreshes. */
